@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuizApp</string>
+    <string name="settings_title">Configuración</string>
+    <string name="change_language">Cambiar Idioma</string>
+    <string name="dark_mode">Modo Oscuro</string>
+    <string name="game_sounds">Sonidos del Juego</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="language_english">Inglés</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_french">Francés</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="welcome_to_quizapp">Bienvenido a QuizApp</string>
+    <string name="loginbtn">Iniciar sesión</string>
+    <string name="registerbtn">Registrarse</string>
+    <string name="main_menu">Menú Principal</string>
+    <string name="new_game">Nuevo Juego</string>
+    <string name="continue_game">Continuar Juego</string>
+    <string name="stats">Estadísticas</string>
+    <string name="settings">Configuración</string>
+    <string name="confirm_password">Confirmar Contraseña</string>
+    <string name="register">Registrarse</string>
+    <string name="settingstxt">Configuración</string>
+    <string name="change_languagetxt">Cambiar Idioma:</string>
+    <string name="dark_modetxt">Modo Oscuro</string>
+    <string name="game_soundstxt">Sonidos del Juego</string>
+    <string name="logoutbtn">Cerrar sesión</string>
+    <string name="select_category">Selecciona una Categoría</string>
+    <string name="select_difficulty">Selecciona el Nivel de Dificultad</string>
+    <string name="start_quiz">Comenzar Quiz</string>
+    <string name="select_category_prompt">Por favor, selecciona una categoría</string>
+    <string name="failed_to_load_categories">Error al cargar las categorías</string>
+    <string name="error_fetching_categories">Error al obtener las categorías: %1$s</string>
+    <string name="any_difficulty">Cualquiera</string>
+    <string name="easy">Fácil</string>
+    <string name="medium">Medio</string>
+    <string name="hard">Difícil</string>
+    <string name="congratulations">¡Felicidades! ¡Has aprobado!</string>
+    <string name="better_luck">¡Mejor suerte la próxima vez!</string>
+    <string name="your_score">Tu Puntaje: %1$d / %2$d</string>
+    <string name="close">Cerrar</string>
+</resources>

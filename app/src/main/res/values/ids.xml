@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="dialogQuizResultLayout" type="id" />
+    <item name="resultIconImageView" type="id" />
+    <item name="resultMessageTextView" type="id" />
+    <item name="scoreTextView" type="id" />
+    <item name="closeButton" type="id" />
+</resources>

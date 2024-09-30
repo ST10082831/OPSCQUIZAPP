@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "767552594578",
+    "project_id": "opscquizapp",
+    "storage_bucket": "opscquizapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767552594578:android:b39a68719ee998c10d3c4b",
+        "android_client_info": {
+          "package_name": "com.example.opscquizapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767552594578-ms8fmj8p81bv2kqsj0jvvtrhm16fqhqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.opscquizapp",
+            "certificate_hash": "8a39a91f5a8a622ae5920f00edcdd329e98d303c"
+          }
+        },
+        {
+          "client_id": "767552594578-ate34p8tpffk6ti1k62a394diphche75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6Tf_GkYlAvQXTh5yqDBQBOPtfHNiij0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767552594578-ate34p8tpffk6ti1k62a394diphche75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
