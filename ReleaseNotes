@@ -1,0 +1,36 @@
+QuizApp Release Notes
+Version: 1.1.0
+Release Date: November 5, 2024
+New Features and Enhancements
+
+    Biometric Login
+        Description: Added support for biometric authentication, allowing users to log in using fingerprint or face recognition.
+        Details: After a successful manual login, users can choose to enable biometric login for quicker access. Biometric login is securely stored and can be enabled or disabled in the settings.
+
+    Google Sign-In Integration
+        Description: Users can now log in with their Google accounts, providing a seamless and quick sign-on experience.
+        Details: Google Sign-In is integrated with Firebase Authentication, simplifying the registration and login processes.
+
+    Multilingual Support
+        Description: The app now supports three languages: English, Afrikaans, and Zulu.
+        Details: Users can switch between languages in the settings, and the app will dynamically adjust all displayed text to the selected language.
+
+    Continue Game Notifications
+        Description: Added a notification system that alerts users when they have a saved game available to continue.
+        Details: Users receive a push notification when a saved game exists, prompting them to pick up where they left off. This feature enhances user experience by providing reminders for incomplete games.
+
+    Dark Mode and Sound Settings
+        Description: Enhanced the settings page with options to toggle dark mode and manage in-game sound settings.
+        Details: Users can now adjust visual and sound preferences for a customized experience, whether in light or dark environments.
+
+    Improved User Interface
+        Description: Updated the main menu, login, and registration screens for a cleaner and more user-friendly design.
+        Details: The updated UI enhances navigation, aesthetics, and ease of use, making key functions more accessible and visually appealing.
+
+    Data Security with Firebase
+        Description: Enhanced security protocols, including encrypted shared preferences for biometric login data.
+        Details: Biometric login information is securely stored using encrypted shared preferences, ensuring data privacy and protection against unauthorized access.
+
+    Updated Leaderboard
+        Description: Real-time leaderboard now allows users to track performance and view scores compared to other users.
+        Details: Users can see their position on the leaderboard after completing quizzes, with scores stored and displayed from Firebase Firestore.
