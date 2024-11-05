@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="Theme.QuizApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+
+        <!-- Background and Surface Colors -->
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+
+        <!-- Error Colors -->
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+
+        <!-- Typography -->
+        <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="android:textColorSecondary">@color/colorOnBackground</item>
+
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!-- Text Appearance for Headings -->
+    <style name="TextAppearance.OPSCQuizApp.Heading" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Text Appearance for Body -->
+    <style name="TextAppearance.OPSCQuizApp.Body" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/colorOnBackground</item>
+    </style>
+
+    <!-- Custom Borderless Button Style -->
+    <style name="Widget.QuizApp.Button.Borderless" parent="Widget.MaterialComponents.Button.TextButton">
+        <!-- Remove background tint to make it borderless -->
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <!-- Set text color as desired -->
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+</resources>

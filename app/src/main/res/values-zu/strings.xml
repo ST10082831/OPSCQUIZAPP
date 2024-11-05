@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">QuizApp</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Izilungiselelo</string>
+    <string name="change_language">Shintsha Ulimi</string>
+    <string name="dark_mode">Imodi Ebumnyama</string>
+    <string name="game_sounds">Izwi Lomdlalo</string>
+    <string name="logout">Phuma</string>
+
+    <!-- Language Names -->
+    <string name="language_english">IsiNgisi</string>
+    <string name="language_spanish">IsiSpanish</string>
+    <string name="language_french">IsiFulentshi</string>
+    <string name="language_afrikaans">Afrikaans\n</string>
+    <string name="language_zulu">IsiZulu</string>
+
+    <!-- Category and Difficulty -->
+    <string name="select_category">Khetha Isigaba</string>
+    <string name="select_difficulty">Khetha Izinga Lobunzima</string>
+    <string name="start_quiz">Qala Umbuzo</string>
+    <string name="select_category_prompt">Sicela ukhethe isigaba</string>
+    <string name="failed_to_load_categories">Kwehlulekile ukulayisha izigaba</string>
+    <string name="error_fetching_categories">Iphutha ekutholeni izigaba: %1$s</string>
+
+    <!-- Authentication -->
+    <string name="email">I-imeyili</string>
+    <string name="password">Iphasiwedi</string>
+    <string name="login">Ngena</string>
+    <string name="welcome_to_quizapp">Siyakwamukela ku-QuizApp</string>
+    <string name="loginbtn">Ngena</string>
+    <string name="registerbtn">Bhalisa</string>
+
+    <!-- Main Menu -->
+    <string name="main_menu">Umniningwane Omkhulu</string>
+    <string name="new_game">Umdlalo Omusha</string>
+    <string name="continue_game">Qhubeka Nomhlelo</string>
+    <string name="stats">Izibalo</string>
+    <string name="settings">Izilungiselelo</string>
+    <string name="confirm_password">Qinisekisa Iphasiwedi</string>
+    <string name="register">Bhalisa</string>
+    <string name="settingstxt">Izilungiselelo</string>
+    <string name="change_languagetxt">Shintsha Ulimi:</string>
+    <string name="dark_modetxt">Imodi Ebumnyama</string>
+    <string name="game_soundstxt">Izwi Lomdlalo</string>
+    <string name="logoutbtn">Phuma</string>
+    <string name="select_a_categorytxt">Khetha Isigaba</string>
+    <string name="any_difficulty">Noma Yisiphi</string>
+    <string name="easy">Kulula</string>
+    <string name="medium">Ophakathi</string>
+    <string name="hard">Okunzima</string>
+
+    <!-- Quiz Results -->
+    <string name="congratulations">Siyakuhalalisela! Uphumelele!</string>
+    <string name="better_luck">Inhlanhla elandelayo!</string>
+    <string name="your_score">Amaphuzu Akho: %1$d / %2$d</string>
+    <string name="close">Valelisa</string>
+
+    <!-- Biometric Authentication -->
+    <string name="biometric_login">Ngena Ngama-Biometrics</string>
+    <string name="biometric_enable_prompt_title">Vula Ukuqinisekiswa Kwamabhayometrikhi</string>
+    <string name="biometric_enable_prompt_message">Ufuna ukuvula ukuqinisekiswa kwamabhayometrikhi ukuze ufike ngokushesha futhi ngokuvikeleka?</string>
+    <string name="biometric_enable_positive">Yebo</string>
+    <string name="biometric_enable_negative">Cha</string>
+    <string name="biometric_authentication_failed">Ukuqinisekiswa kwamabhayometrikhi kwehlulekile. Sicela uzame futhi.</string>
+    <string name="biometric_authentication_error">Iphutha ekuqinisekiseni kwamabhayometrikhi: %1$s</string>
+    <string name="biometric_prompt_title">Ukuqinisekiswa Kwamabhayometrikhi</string>
+    <string name="biometric_prompt_subtitle">Qinisekisa ukuze ungene ngokuphepha</string>
+    <string name="biometric_prompt_negative">Khansela</string>
+    <string name="biometric_enroll_prompt_title">Ukubhalisa Kwama-Biometrics</string>
+    <string name="biometric_enroll_prompt_message">Sicela ubhalise iziqu zakho zama-biometrics kuzilungiselelo zesixhobo.</string>
+    <string name="biometric_enroll_positive">Vula Izilungiselelo</string>
+    <string name="biometric_enroll_negative">Khansela</string>
+    <string name="enable_biometric_auth">Vula Ukuqinisekiswa Kwamabhayometrikhi</string>
+
+    <!-- User Information -->
+    <string name="username">Igama Lomsebenzisi\n</string>
+    <string name="app_logo">Ilogo Le-App</string>
+    <string name="leaderboard">Uhlu Lwabaphambili\n</string>
+    <string name="restart_app">Qalisa Kabusha Uhlelo</string>
+    <string name="profile">Iphrofayela</string>
+    <string name="usernametxt">Igama Lomsebenzisi\n</string>
+    <string name="emailtxt">I-imeyili:</string>
+    <string name="notification_continue_game">Unenawo umdlalo ongawuqhubeka nawo!</string>
+    <string name="enable_notifications">Enable Notifications</string>
+</resources>

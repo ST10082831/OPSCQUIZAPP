@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- File: app/src/main/res/values-af/strings.xml -->
+
+<resources>
+    <!-- App Name -->
+    <string name="app_name">QuizApp</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Instellings</string>
+    <string name="change_language">Verander Taal</string>
+    <string name="dark_mode">Donker Modus</string>
+    <string name="game_sounds">Speel Klanke</string>
+    <string name="logout">Teken Af</string>
+
+    <!-- Language Names -->
+    <string name="language_english">Engels</string>
+    <string name="language_spanish">Spaans</string>
+    <string name="language_french">Frans</string>
+    <string name="language_afrikaans">Afrikaans\n</string>
+    <string name="language_zulu">IsiZulu</string>
+
+    <!-- Category and Difficulty -->
+    <string name="select_category">Kies \'n Kategorie</string>
+    <string name="select_difficulty">Kies Moeilikheidsgraad</string>
+    <string name="start_quiz">Begin Kwadraat</string>
+    <string name="select_category_prompt">Kies asseblief \'n kategorie</string>
+    <string name="failed_to_load_categories">Kon kategorieë nie laai nie</string>
+    <string name="error_fetching_categories">Fout met die haal van kategorieë: %1$s</string>
+
+    <!-- Authentication -->
+    <string name="email">E-pos</string>
+    <string name="password">Wagwoord</string>
+    <string name="login">Teken In</string>
+    <string name="welcome_to_quizapp">Welkom by QuizApp</string>
+    <string name="loginbtn">Teken In</string>
+    <string name="registerbtn">Registreer</string>
+
+    <!-- Main Menu -->
+    <string name="main_menu">Hoofmenu</string>
+    <string name="new_game">Nuwe Speletjie</string>
+    <string name="continue_game">Gaan voort met Speletjie</string>
+    <string name="stats">Statistieke</string>
+    <string name="settings">Instellings</string>
+    <string name="confirm_password">Bevestig Wagwoord</string>
+    <string name="register">Registreer</string>
+    <string name="settingstxt">Instellings</string>
+    <string name="change_languagetxt">Verander Taal:</string>
+    <string name="dark_modetxt">Donker Modus</string>
+    <string name="game_soundstxt">Speel Klanke</string>
+    <string name="logoutbtn">Teken Af</string>
+    <string name="select_a_categorytxt">Kies \'n Kategorie</string>
+    <string name="any_difficulty">Enige</string>
+    <string name="easy">Maklik</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+
+    <!-- Quiz Results -->
+    <string name="congratulations">Gelukwens! Jy het geslaag!</string>
+    <string name="better_luck">Meer geluk volgende keer!</string>
+    <string name="your_score">Jou Puntestand: %1$d / %2$d</string>
+    <string name="close">Maak Toe</string>
+
+    <!-- Biometric Authentication -->
+    <string name="biometric_login">Teken In met Biometrie</string>
+    <string name="biometric_enable_prompt_title">Skakel Biometriese Verifikasie In</string>
+    <string name="biometric_enable_prompt_message">Wil jy biometriese verifikasie inskakel vir vinniger en veilige toegang?</string>
+    <string name="biometric_enable_positive">Ja</string>
+    <string name="biometric_enable_negative">Nee</string>
+    <string name="biometric_authentication_failed">Biometriese verifikasie het misluk. Probeer asseblief weer.</string>
+    <string name="biometric_authentication_error">Biometriese verifikasie fout: %1$s</string>
+    <string name="biometric_prompt_title">Biometriese Verifikasie</string>
+    <string name="biometric_prompt_subtitle">Verifiseer om veilig in te teken</string>
+    <string name="biometric_prompt_negative">Kanselleer</string>
+    <string name="biometric_enroll_prompt_title">Biometriese Inskrywing</string>
+    <string name="biometric_enroll_prompt_message">Skryf asseblief jou biometriese verwysings in by toestelinstellings.</string>
+    <string name="biometric_enroll_positive">Maak Instellings Open</string>
+    <string name="biometric_enroll_negative">Kanselleer</string>
+    <string name="enable_biometric_auth">Skakel Biometriese Verifikasie In</string>
+
+    <!-- User Information -->
+    <string name="username">Gebruikersnaam\n</string>
+    <string name="app_logo">Aansoek Logo</string>
+    <string name="leaderboard">Voorhooflys\n</string>
+    <string name="restart_app">Herbegin Aansoek</string>
+    <string name="profile">Profiel</string>
+    <string name="usernametxt">Gebruikersnaam\n</string>
+    <string name="emailtxt">E-pos:</string>
+    <string name="notification_continue_game">Jy het \'n speletjie om voort te gaan!</string>
+    <string name="enable_notifications">Enable Notifications</string>
+</resources>
