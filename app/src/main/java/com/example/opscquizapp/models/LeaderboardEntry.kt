@@ -1,4 +1,3 @@
-// File: LeaderboardEntry.kt
 package com.example.opscquizapp.models
 
 import com.google.firebase.firestore.ServerTimestamp

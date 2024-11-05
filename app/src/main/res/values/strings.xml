@@ -19,7 +19,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="welcome_to_quizapp">Welcome to QuizApp</string>
+    <string name="welcome_to_quizapp">Welcome to QUIZITUP!</string>
     <string name="loginbtn">Login</string>
     <string name="registerbtn">Register</string>
     <string name="main_menu">Main Menu</string>
@@ -43,5 +43,36 @@
     <string name="better_luck">Better luck next time!</string>
     <string name="your_score">Your Score: %1$d / %2$d</string>
     <string name="close">Close</string>
+    <string name="biometric_login">Login with Biometrics</string>
+    <string name="biometric_enable_prompt_title">Enable Biometric Authentication</string>
+    <string name="biometric_enable_prompt_message">Would you like to enable biometric authentication for quicker and secure access?</string>
+    <string name="biometric_enable_positive">Yes</string>
+    <string name="biometric_enable_negative">No</string>
+    <string name="biometric_authentication_failed">Biometric authentication failed. Please try again.</string>
+    <string name="biometric_authentication_error">Biometric authentication error: %1$s</string>
+    <string name="biometric_prompt_title">Biometric Authentication</string>
+    <string name="biometric_prompt_subtitle">Authenticate to login securely</string>
+    <string name="biometric_prompt_negative">Cancel</string>
+    <string name="biometric_enroll_prompt_title">Biometric Enrollment</string>
+    <string name="biometric_enroll_prompt_message">Please enroll your biometric credentials in device settings.</string>
+    <string name="biometric_enroll_positive">Open Settings</string>
+    <string name="biometric_enroll_negative">Cancel</string>
+    <string name="enable_biometric_auth">Enable Biometric Authentication</string>
+    <string name="username">Username\n</string>
+    <string name="app_logo">App Logo</string>
+    <string name="leaderboard">Leaderboard\n</string>
+    <string name="restart_app">Restart App</string>
+    <string name="language_afrikaans">Afrikaans\n</string>
+    <string name="language_zulu">Zulu</string>
+    <string name="profile">Profile</string>
+    <string name="usernametxt">Username\n</string>
+    <string name="emailtxt">Email:</string>
+    <string name="notification_continue_game">You have a game to continue!</string>
+    <string name="enable_notifications">Enable Notifications</string>
+    <string name="biometric_not_available">Biometric authentication is not available on this device.</string>
+    <string name="biometric_not_setup">Biometric authentication is not set up.</string>
+    <string name="biometric_already_enabled">Biometric authentication is already enabled.</string>
+    <string name="biometric_authentication">Biometric Authentication</string>
+
 
 </resources>

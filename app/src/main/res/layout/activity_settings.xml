@@ -69,11 +69,22 @@
             android:layout_marginTop="16dp" />
 
         <!-- Profile Header -->
+
+        <Switch
+            android:id="@+id/notificationsSwitch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/enable_notifications"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gameSoundsSwitch" />
+
         <TextView
             android:id="@+id/profileHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile"
+            android:text="@string/profile"
             android:textStyle="bold"
             android:textSize="24sp"
             android:paddingTop="16dp"
@@ -87,7 +98,7 @@
             android:id="@+id/usernameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username:"
+            android:text="@string/usernametxt"
             app:layout_constraintTop_toBottomOf="@id/profileHeader"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
@@ -97,7 +108,7 @@
             android:id="@+id/usernameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Loading..."
+            android:text="@string/username"
             app:layout_constraintTop_toBottomOf="@id/usernameLabel"
             app:layout_constraintStart_toStartOf="@id/usernameLabel"
             android:layout_marginTop="8dp" />
@@ -107,7 +118,7 @@
             android:id="@+id/emailLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email:"
+            android:text="@string/emailtxt"
             app:layout_constraintTop_toBottomOf="@id/usernameTextView"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
@@ -117,7 +128,7 @@
             android:id="@+id/emailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Loading..."
+            android:text="@string/email"
             app:layout_constraintTop_toBottomOf="@id/emailLabel"
             app:layout_constraintStart_toStartOf="@id/emailLabel"
             android:layout_marginTop="8dp" />

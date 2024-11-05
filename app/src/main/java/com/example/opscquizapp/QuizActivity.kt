@@ -2,6 +2,9 @@
 package com.example.opscquizapp
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
@@ -17,8 +20,16 @@ import com.google.firebase.firestore.FirebaseFirestore
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.example.opscquizapp.roomdb.AppDatabase
+import com.example.opscquizapp.roomdb.QuestionEntity
+import com.example.opscquizapp.roomdb.QuizResultEntity
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class QuizActivity : AppCompatActivity() {
+class QuizActivity : BaseActivity() {
 
     private lateinit var questionNumberTextView: TextView
     private lateinit var questionTextView: TextView
@@ -78,48 +89,102 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun fetchQuestions() {
-        val call = ApiClient.apiService.getQuestions(
-            amount = 10,
-            category = selectedCategoryId,
-            difficulty = selectedDifficulty,
-            type = null
-        )
+        if (isNetworkAvailable()) {
+            // Fetch from API if network is available
+            val call = ApiClient.apiService.getQuestions(
+                amount = 10,
+                category = selectedCategoryId,
+                difficulty = selectedDifficulty,
+                type = null
+            )
 
-        call.enqueue(object : Callback<QuestionResponse> {
-            override fun onResponse(
-                call: Call<QuestionResponse>,
-                response: Response<QuestionResponse>
-            ) {
-                if (response.isSuccessful) {
-                    questions = response.body()?.results ?: emptyList()
-                    if (questions.isNotEmpty()) {
-                        displayQuestion()
+            call.enqueue(object : Callback<QuestionResponse> {
+                override fun onResponse(
+                    call: Call<QuestionResponse>,
+                    response: Response<QuestionResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        questions = response.body()?.results ?: emptyList()
+                        if (questions.isNotEmpty()) {
+                            // Save questions to local database for offline use
+                            saveQuestionsToLocalDb(questions)
+                            displayQuestion() // Display the fetched question
+                        } else {
+                            showToast("No questions available for the selected options.")
+                            finish()
+                        }
                     } else {
-                        Toast.makeText(
-                            this@QuizActivity,
-                            "No questions available for the selected options.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        finish()
+                        showToast("Failed to load questions from server")
                     }
+                }
+
+                override fun onFailure(call: Call<QuestionResponse>, t: Throwable) {
+                    showToast("Error: ${t.message}")
+                }
+            })
+        } else {
+            // If network is unavailable, fetch from local database
+            fetchQuestionsFromLocalDb()
+        }
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false
+            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+            return activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        } else {
+            val networkInfo = connectivityManager.activeNetworkInfo
+            return networkInfo != null && networkInfo.isConnectedOrConnecting
+        }
+    }
+
+    private fun saveQuestionsToLocalDb(questions: List<QuestionFetch>) {
+        val db = AppDatabase.getDatabase(this)
+        CoroutineScope(Dispatchers.IO).launch {
+            val questionEntities = questions.map { question ->
+                QuestionEntity(
+                    category = question.category,
+                    type = question.type,
+                    difficulty = question.difficulty,
+                    question = question.question,
+                    correctAnswer = question.correct_answer,
+                    incorrectAnswers = Gson().toJson(question.incorrect_answers),
+                    isSynced = true
+                )
+            }
+            db.questionDao().insertQuestions(questionEntities)
+        }
+    }
+
+    private fun fetchQuestionsFromLocalDb() {
+        val db = AppDatabase.getDatabase(this)
+        CoroutineScope(Dispatchers.IO).launch {
+            val questionEntities = db.questionDao().getAllQuestions()
+            questions = questionEntities.map { entity ->
+                QuestionFetch(
+                    category = entity.category,
+                    type = entity.type,
+                    difficulty = entity.difficulty,
+                    question = entity.question,
+                    correct_answer = entity.correctAnswer,
+                    incorrect_answers = Gson().fromJson(entity.incorrectAnswers, Array<String>::class.java).toList()
+                )
+            }
+            withContext(Dispatchers.Main) {
+                if (questions.isNotEmpty()) {
+                    displayQuestion()
                 } else {
-                    Toast.makeText(
-                        this@QuizActivity,
-                        "Failed to load questions",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast("No offline data available. Please connect to the internet.")
+                    finish()
                 }
             }
-
-            override fun onFailure(call: Call<QuestionResponse>, t: Throwable) {
-                Toast.makeText(
-                    this@QuizActivity,
-                    "Error: ${t.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
+        }
     }
+private fun showToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
 
     private fun displayQuestion() {
         if (currentQuestionIndex >= questions.size) {
@@ -214,6 +279,7 @@ class QuizActivity : AppCompatActivity() {
                 categoryName = selectedCategoryName
             )
 
+            // Save to Firestore
             db.collection("leaderboard")
                 .add(leaderboardEntry)
                 .addOnSuccessListener {
@@ -221,9 +287,26 @@ class QuizActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { e ->
                     Log.e("QuizActivity", "Error saving quiz result", e)
+                    // Save to local database if failed
+                    saveQuizResultToLocalDb(leaderboardEntry)
                 }
         }
-
+    }
+    private fun saveQuizResultToLocalDb(leaderboardEntry: LeaderboardEntry) {
+        val dbLocal = AppDatabase.getDatabase(this)
+        CoroutineScope(Dispatchers.IO).launch {
+            val resultEntity = QuizResultEntity(
+                userId = leaderboardEntry.userId,
+                score = leaderboardEntry.score,
+                totalQuestions = leaderboardEntry.totalQuestions,
+                percentage = leaderboardEntry.percentage,
+                categoryId = leaderboardEntry.categoryId,
+                categoryName = leaderboardEntry.categoryName,
+                timestamp = System.currentTimeMillis(),
+                isSynced = false
+            )
+            dbLocal.quizResultDao().insertQuizResult(resultEntity)
+        }
     }
     private fun saveGameState() {
         val user = auth.currentUser
@@ -278,10 +361,5 @@ class QuizActivity : AppCompatActivity() {
     }
 
 
-    override fun attachBaseContext(newBase: Context) {
-        val prefs = newBase.getSharedPreferences("QuizAppSettings", Context.MODE_PRIVATE)
-        val languageCode = prefs.getString("language", "en") ?: "en"
-        val context = LocaleHelper.setLocale(newBase, languageCode)
-        super.attachBaseContext(context)
-    }
+
 }

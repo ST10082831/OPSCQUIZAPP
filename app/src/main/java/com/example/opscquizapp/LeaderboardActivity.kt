@@ -13,7 +13,7 @@ import com.example.opscquizapp.models.LeaderboardEntry
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
-class LeaderboardActivity : AppCompatActivity() {
+class LeaderboardActivity : BaseActivity() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var leaderboardListView: ListView
@@ -56,10 +56,5 @@ class LeaderboardActivity : AppCompatActivity() {
         leaderboardListView.visibility = View.VISIBLE
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        val prefs = newBase.getSharedPreferences("QuizAppSettings", Context.MODE_PRIVATE)
-        val languageCode = prefs.getString("language", "en") ?: "en"
-        val context = LocaleHelper.setLocale(newBase, languageCode)
-        super.attachBaseContext(context)
-    }
+
 }

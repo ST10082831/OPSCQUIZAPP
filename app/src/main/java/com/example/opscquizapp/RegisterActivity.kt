@@ -2,115 +2,192 @@ package com.example.opscquizapp
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import com.example.opscquizapp.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Locale
+import java.util.concurrent.Executor
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        // Initialize Firebase Auth and Firestore
+        auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        auth = FirebaseAuth.getInstance()
+        // Inflate the layout using View Binding
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("QuizAppPrefs", Context.MODE_PRIVATE)
 
-        binding.registerButton.setOnClickListener {
-            val username = binding.usernameEditText.text.toString().trim()
-            val email = binding.emailEditText.text.toString().trim()
-            val password = binding.passwordEditText.text.toString().trim()
-            val confirmPassword = binding.confirmPasswordEditText.text.toString().trim()
-
-            if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && username.isNotEmpty()) {
-                if (password == confirmPassword) {
-                    registerUser(email, password, username)
-                } else {
-                    Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+        // Initialize Biometric components
+        executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                Toast.makeText(applicationContext, getString(R.string.biometric_authentication_error, errString), Toast.LENGTH_SHORT).show()
             }
-        }
-    }
-    override fun attachBaseContext(newBase: Context) {
-        val prefs = newBase.getSharedPreferences("QuizAppSettings", MODE_PRIVATE)
-        val languageCode = prefs.getString("language", "en") ?: "en"
-        val context = LocaleHelper.setLocale(newBase, languageCode)
-        super.attachBaseContext(context)
-        Log.d("SettingsActivity", "attachBaseContext language: $languageCode")
-    }
-    private fun saveUsername(user: FirebaseUser, username: String) {
-        val profileUpdates = UserProfileChangeRequest.Builder()
-            .setDisplayName(username)
+
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                // Biometric enabled successfully
+                enableBiometricAuthentication()
+                Toast.makeText(applicationContext, "Biometric authentication enabled.", Toast.LENGTH_SHORT).show()
+                // Navigate to MainMenuActivity
+                proceedToMainMenu()
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                Toast.makeText(applicationContext, getString(R.string.biometric_authentication_failed), Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(getString(R.string.biometric_enable_prompt_title))
+            .setSubtitle(getString(R.string.biometric_enable_prompt_message)) // Replaced setMessage with setSubtitle
+            //.setDescription(getString(R.string.biometric_enable_prompt_message)) // Alternatively, use setDescription
+            .setNegativeButtonText(getString(R.string.biometric_enable_negative))
             .build()
 
-        user.updateProfile(profileUpdates)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+        // Set up Register Button Click Listener
+        binding.registerButton.setOnClickListener {
+            performRegistration()
+        }
 
-                    saveUserProfileToFirestore(user.uid, username)
-                } else {
-                    Toast.makeText(this, "Failed to save username.", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
-    // Register new user with Email and Password
-    private fun registerUser(email: String, password: String, username: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // User registered successfully
-                    val user = auth.currentUser
-                    if (user != null) {
-                        // Save the username
-                        saveUsername(user, username)
-                    } else {
-                        Toast.makeText(this, "Registration failed.", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Registration failed: ${task.exception?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-    }
-        private fun saveUserProfileToFirestore(uid: String, username: String) {
-            val userMap = hashMapOf(
-                "username" to username,
-                "email" to auth.currentUser?.email
-            )
-
-            db.collection("users").document(uid)
-                .set(userMap)
-                .addOnSuccessListener {
-                    // Navigate to the main activity or dashboard
-                    val intent = Intent(this, MainMenuActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to save user profile.", Toast.LENGTH_SHORT).show()
-                    Log.e("RegisterActivity", "Error saving user profile", e)
-                }
+        // Set up Biometric Enable Button Click Listener
+        binding.enableBiometricButton.setOnClickListener {
+            biometricPrompt.authenticate(promptInfo)
         }
     }
+
+    private fun performRegistration() {
+        val username = binding.usernameEditText.text.toString().trim()
+        val email = binding.emailEditText.text.toString().trim()
+        val password = binding.passwordEditText.text.toString().trim()
+        val confirmPassword = binding.confirmPasswordEditText.text.toString().trim()
+
+        // Input Validation
+        if (username.isEmpty()) {
+            binding.usernameEditText.error = "Username is required"
+            binding.usernameEditText.requestFocus()
+            return
+        }
+
+        if (email.isEmpty()) {
+            binding.emailEditText.error = "Email is required"
+            binding.emailEditText.requestFocus()
+            return
+        }
+
+        if (password.isEmpty()) {
+            binding.passwordEditText.error = "Password is required"
+            binding.passwordEditText.requestFocus()
+            return
+        }
+
+        if (password != confirmPassword) {
+            binding.confirmPasswordEditText.error = "Passwords do not match"
+            binding.confirmPasswordEditText.requestFocus()
+            return
+        }
+
+        // Show ProgressBar
+        binding.registerProgressBar.visibility = View.VISIBLE
+
+        // Create User with Firebase Auth
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                binding.registerProgressBar.visibility = View.GONE
+                if (task.isSuccessful) {
+                    // Save additional user data in Firestore
+                    val userId = auth.currentUser?.uid
+                    val user = hashMapOf(
+                        "username" to username,
+                        "email" to email
+                    )
+
+                    if (userId != null) {
+                        db.collection("users").document(userId)
+                            .set(user)
+                            .addOnSuccessListener {
+                                // Registration successful, show Biometric Enable Button
+                                binding.enableBiometricButton.visibility = View.VISIBLE
+                                Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Failed to save user data: ${e.message}", Toast.LENGTH_LONG).show()
+                            }
+                    } else {
+                        Toast.makeText(this, "User ID is null.", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    // Registration failed
+                    Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+    }
+
+    private fun enableBiometricAuthentication() {
+        // Store biometric preference in SharedPreferences
+        sharedPreferences.edit().putBoolean("biometric_enabled", true).apply()
+
+        // Check if biometrics are enrolled
+        if (!isBiometricEnrolled()) {
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.biometric_enroll_prompt_title))
+                .setMessage(getString(R.string.biometric_enroll_prompt_message))
+                .setPositiveButton(getString(R.string.biometric_enroll_positive)) { dialog, _ ->
+                    // Open biometric enrollment settings
+                    val enrollIntent = Intent(android.provider.Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                        putExtra(android.provider.Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED, BiometricManager.Authenticators.BIOMETRIC_STRONG)
+                    }
+                    startActivity(enrollIntent)
+                    dialog.dismiss()
+                }
+                .setNegativeButton(getString(R.string.biometric_enroll_negative)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .setCancelable(false)
+                .show()
+        }
+    }
+
+    private fun isBiometricEnrolled(): Boolean {
+        val biometricManager = BiometricManager.from(this)
+        return biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
+    }
+
+    private fun proceedToMainMenu() {
+        val intent = Intent(this, MainMenuActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+
+}
+
+
 

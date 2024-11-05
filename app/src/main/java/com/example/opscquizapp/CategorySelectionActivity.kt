@@ -13,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CategorySelectionActivity : AppCompatActivity() {
+class CategorySelectionActivity : BaseActivity() {
 
     private lateinit var categoryListView: ListView
     private lateinit var progressBar: ProgressBar
@@ -131,11 +131,5 @@ class CategorySelectionActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-    // to handle language settings
-    override fun attachBaseContext(newBase: Context) {
-        val prefs = newBase.getSharedPreferences("QuizAppSettings", Context.MODE_PRIVATE)
-        val languageCode = prefs.getString("language", "en") ?: "en"
-        val context = LocaleHelper.setLocale(newBase, languageCode)
-        super.attachBaseContext(context)
-    }
+
 }
